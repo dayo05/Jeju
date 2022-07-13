@@ -54,7 +54,7 @@ class JejuDataset : Dataset
     private List<string> files;
     public JejuDataset(bool isTrain)
     {
-        files = Directory.GetDirectories("/home/dayo/datasets/jeju" + (isTrain ? "/train/jeju" : "/test/jeju") ).SelectMany(Directory.GetFiles).ToList();
+        files = Directory.GetDirectories("/home/dayo/datasets/jeju" + (isTrain ? "/train/jeju" : "/test/jeju") ).SelectMany(Directory.GetFiles).Where(x => x.EndsWith(".png")).ToList();
     }
 
     public override Dictionary<string, Tensor> GetTensor(long index) => new Dictionary<string, Tensor>
