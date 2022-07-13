@@ -4,6 +4,7 @@ using SixLabors.ImageSharp.Advanced;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
+using TorchSharp;
 using static TorchSharp.torch;
 using static TorchSharp.torchvision.models;
 using static TorchSharp.torch.utils.data;
@@ -33,15 +34,17 @@ foreach(var x in Range(0, 1000)) {
     Console.Write($"{avg_cost}, ");
 
     avg_cost = 0;
+    var accuracy = 0.0;
     using (no_grad())
     {
         foreach (var t in validation)
         {
             var hypothesis = model.forward(t["image"]);
             avg_cost += criterion(hypothesis, t["label"]).cpu().item<float>() / validation.Count;
+            accuracy += (torch.max(hypothesis, 1).indexes == t["label"]).@float().mean().sum().item<float>();
         }
     }
-    Console.WriteLine(avg_cost);
+    Console.WriteLine($"{avg_cost} {accuracy / testDataset.Count}%");
 }
 
 
