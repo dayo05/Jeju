@@ -59,7 +59,7 @@ class JejuDataset : Dataset
 
     public override Dictionary<string, Tensor> GetTensor(long index) => new Dictionary<string, Tensor>
     {
-        { "label", tensor(int.Parse(files[(int)index].Split(Path.DirectorySeparatorChar)[^2]), ScalarType.Float32) },
+        { "label", tensor(int.Parse(files[(int)index].Split(Path.DirectorySeparatorChar)[^2])) },
         { "image", ReadImage(files[(int)index]) }
     };
     
