@@ -1,16 +1,13 @@
 ﻿using System.ComponentModel;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Advanced;
-using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using SixLabors.ImageSharp.Processing.Processors.Transforms;
 using static TorchSharp.torch;
 using static TorchSharp.torchvision.models;
 using static TorchSharp.torch.utils.data;
 using static System.Linq.Enumerable;
-using Size = SixLabors.ImageSharp.Size;
 
 var trainDataset = new JejuDataset(true);
 var testDataset = new JejuDataset(false);
@@ -19,7 +16,7 @@ var validation = new DataLoader(testDataset, device: CUDA, num_worker: 10, batch
 
 var model = resnet34(6, device: CUDA);
 var criterion = nn.functional.cross_entropy_loss();
-var optimizer = optim.Adam(model.parameters(), lr: 0.0001);
+var optimizer = optim.Adam(model.parameters(), lr: 0.001);
 
 foreach(var x in Range(0, 1000)) {
     var avg_cost = 0.0;
@@ -33,7 +30,7 @@ foreach(var x in Range(0, 1000)) {
 
         avg_cost += cost.cpu().item<float>() / train.Count;
     }
-    Console.WriteLine(avg_cost);
+    Console.Write($"{avg_cost}, ");
 
     avg_cost = 0;
     using (no_grad())
@@ -44,7 +41,7 @@ foreach(var x in Range(0, 1000)) {
             avg_cost += criterion(hypothesis, t["label"]).cpu().item<float>() / validation.Count;
         }
     }
-    Console.WriteLine();
+    Console.WriteLine(avg_cost);
 }
 
 
