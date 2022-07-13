@@ -9,6 +9,7 @@
 
     <ItemGroup>
       <PackageReference Include="libtorch-cuda-11.3-linux-x64" Version="1.11.0.1" />
+      <PackageReference Include="SixLabors.ImageSharp" Version="2.1.3" />
       <PackageReference Include="TorchSharp" Version="0.96.8" />
     </ItemGroup>
 
