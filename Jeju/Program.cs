@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Advanced;
-using SixLabors.ImageSharp.Formats.Jpeg;    
+using SixLabors.ImageSharp.Formats.Jpeg;
+using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.PixelFormats;
 
 using static TorchSharp.torch;
@@ -64,7 +65,7 @@ class JejuDataset : Dataset
     
     Tensor ReadImage(string image)
     {
-        var img = Image.Load<Rgb24>(image, new JpegDecoder());
+        var img = Image.Load<Rgb24>(image, new PngDecoder());
         return cat(new[] {ReadImageChannel(img, "R"), ReadImageChannel(img, "G"), ReadImageChannel(img, "B")}, 0).unsqueeze(0);
     }
 
