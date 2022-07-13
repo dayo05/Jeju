@@ -31,7 +31,7 @@ foreach(var x in Range(0, 1000)) {
 
         avg_cost += cost.cpu().item<float>() / train.Count;
     }
-    Console.Write($"{avg_cost}, ");
+    Console.Write($"{avg_cost},");
 
     avg_cost = 0;
     var accuracy = 0.0;
@@ -44,7 +44,7 @@ foreach(var x in Range(0, 1000)) {
             accuracy += (torch.max(hypothesis, 1).indexes == t["label"]).cpu().@float().sum().item<float>();
         }
     }
-    Console.WriteLine($"{avg_cost} {accuracy / testDataset.Count}");
+    Console.WriteLine($"{avg_cost},{accuracy / testDataset.Count}");
 }
 
 
