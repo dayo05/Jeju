@@ -17,7 +17,7 @@ var validation = new DataLoader(testDataset, device: CUDA, num_worker: 10, batch
 
 var model = resnet34(6, device: CUDA);
 var criterion = nn.functional.cross_entropy_loss();
-var optimizer = optim.Adam(model.parameters(), lr: 0.001);
+var optimizer = optim.Adam(model.parameters(), lr: 0.00001);
 
 foreach(var x in Range(0, 1000)) {
     var avg_cost = 0.0;
