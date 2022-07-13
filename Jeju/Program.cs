@@ -41,10 +41,10 @@ foreach(var x in Range(0, 1000)) {
         {
             var hypothesis = model.forward(t["image"]);
             avg_cost += criterion(hypothesis, t["label"]).cpu().item<float>() / validation.Count;
-            accuracy += (torch.max(hypothesis, 1).indexes == t["label"]).@float().mean().sum().item<float>();
+            accuracy += (torch.max(hypothesis, 1).indexes == t["label"]).cpu().@float().mean().sum().item<float>();
         }
     }
-    Console.WriteLine($"{avg_cost} {accuracy / testDataset.Count}%");
+    Console.WriteLine($"{avg_cost} {accuracy / testDataset.Count}");
 }
 
 
