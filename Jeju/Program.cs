@@ -31,7 +31,7 @@ foreach(var x in Range(0, 1000)) {
         cost.backward();
         optimizer.step();
 
-        avg_cost += cost.item<float>() / train.Count;
+        avg_cost += cost.cpu().item<float>() / train.Count;
     }
     Console.WriteLine(avg_cost);
 
@@ -41,7 +41,7 @@ foreach(var x in Range(0, 1000)) {
         foreach (var t in validation)
         {
             var hypothesis = model.forward(t["image"]);
-            avg_cost += criterion(hypothesis, t["label"]).item<float>() / validation.Count;
+            avg_cost += criterion(hypothesis, t["label"]).cpu().item<float>() / validation.Count;
         }
     }
     Console.WriteLine();
