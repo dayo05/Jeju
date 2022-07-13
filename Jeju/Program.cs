@@ -69,7 +69,7 @@ class JejuDataset : Dataset
     {
         var img = Image.Load<Rgb24>(image, new PngDecoder());
         img.Mutate(x => x.Resize(224, 224));
-        return cat(new[] {ReadImageChannel(img, "R"), ReadImageChannel(img, "G"), ReadImageChannel(img, "B")}, 0).unsqueeze(0);
+        return cat(new[] {ReadImageChannel(img, "R"), ReadImageChannel(img, "G"), ReadImageChannel(img, "B")}, 0);
     }
 
     private Tensor ReadImageChannel(Image<Rgb24> image, string channel)
